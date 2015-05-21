@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	
+  	<parent>
+        <groupId>tr.com.photorazzo</groupId>
+        <artifactId>photorazzo-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+  	
+  	<modelVersion>4.0.0</modelVersion>
+  	<artifactId>photorazzo-web</artifactId>
+    <packaging>war</packaging>
+    
+    <properties>
+
+    </properties>
+    
+    <build>
+        <finalName>photorazzo-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>${maven.jetty.plugin.version}</version>
+                <configuration>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                    </webAppConfig>
+                    <resourcesAsCSV>src/main/webapp,${project.build.directory}</resourcesAsCSV>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <stopPort>9966</stopPort>
+                    <stopKey>foo</stopKey>
+                    <systemProperties>
+						<systemProperty>
+							<name>MAVEN_OPTS</name>
+							<value>-XX:PermSize=256M -XX:MaxPermSize=512M -Xms1024m -Xmx1024m</value>
+						</systemProperty>
+					</systemProperties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven.war.plugin.version}</version>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+  
+  	<dependencies>
+  	
+  		<!-- PhotoRazzo                             -->
+	  	<!-- ====================================== -->
+        <dependency>
+            <groupId>tr.com.photorazzo</groupId>
+            <artifactId>photorazzo-core</artifactId>
+        </dependency>
+       
+	</dependencies>
+	
+</project>
